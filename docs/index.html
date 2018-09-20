@@ -27,14 +27,22 @@
 			function verifyYaml()
 			{
 				var text = editor.getValue();
+				var output = document.getElementById("output");
 				try
 				{
 					if(text.trim() == "")
 					{
 						return;
 					}
-					YAML.parse(text);
-					document.getElementById("output").innerHTML = "<span style=\"color:white; background:green;\">The yaml you have provided is valid!</span>";
+					var parsed = YAML.parse(text);
+					if(parsed instanceof Object)
+					{
+						output.innerHTML = "<span style=\"color:white; background:green;\">The yaml you have provided is valid!</span>";
+					}
+					else
+					{
+						output.innerHTML = "<span style=\"color:white; background:red;\">You have not provided any yaml to parse.</span>";
+					}
 				}
 				catch(e)
 				{
@@ -45,7 +53,7 @@
 					editor.markText({line: lineNumber, ch: 0}, {line: lineNumber, ch: lineLength}, {css: "background-color: yellow", clearOnEnter: true});
 					console.log(snippet);
 					var message = e.message;
-					document.getElementById("output").innerHTML = "<span style=\"color:white; background:red;\">" + message.substring(0, message.length -1) + " on line " + e.parsedLine + "." + "</span>";
+					output.innerHTML = "<span style=\"color:white; background:red;\">" + message.substring(0, message.length -1) + " on line " + e.parsedLine + "." + "</span>";
 				}
 			}
 		</script>
