@@ -34,6 +34,7 @@
 						return;
 					}
 					YAML.parse(text);
+					document.getElementById("output").innerHTML = "<span style=\"color:white; background:green;\">The yaml you have provided is valid!</span>";
 				}
 				catch(e)
 				{
@@ -45,9 +46,7 @@
 					console.log(snippet);
 					var message = e.message;
 					document.getElementById("output").innerHTML = "<span style=\"color:white; background:red;\">" + message.substring(0, message.length -1) + " on line " + e.parsedLine + "." + "</span>";
-					return;
 				}
-			document.getElementById("output").innerHTML = "<span style=\"color:white; background:green;\">The yaml you have provided is valid!</span>";
 			}
 		</script>
 	</head>
