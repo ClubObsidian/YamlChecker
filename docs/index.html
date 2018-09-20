@@ -37,11 +37,11 @@
 					var parsed = YAML.parse(text);
 					if(parsed instanceof Object)
 					{
-						output.innerHTML = "<span style=\"color:white; background:green;\">The yaml you have provided is valid!</span>";
+						output.innerHTML = "<span style=\"color:white; background:green;\">Valid yaml!</span>";
 					}
 					else
 					{
-						output.innerHTML = "<span style=\"color:white; background:red;\">You have not provided any yaml to parse.</span>";
+						output.innerHTML = "<span style=\"color:white; background:red;\">No yaml has been provided to parse.</span>";
 					}
 				}
 				catch(e)
