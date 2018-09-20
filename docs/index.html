@@ -1,0 +1,78 @@
+<!--
+   Copyright 2018 Club Obsidian and contributors.
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/yamljs/0.3.0/yaml.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.40.0/codemirror.js"></script>
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+		<link rel="stylesheet" href="css/codemirror.css">
+		<link rel="stylesheet" href="css/style.css">
+		<script>
+			function verifyYaml()
+			{
+				var text = editor.getValue();
+				try
+				{
+					if(text.trim() == "")
+					{
+						return;
+					}
+					YAML.parse(text);
+				}
+				catch(e)
+				{
+					console.log(e);
+					var lineNumber = e.parsedLine - 1;
+					var snippet = e.snippet;
+					var lineLength = snippet.length;
+					editor.markText({line: lineNumber, ch: 0}, {line: lineNumber, ch: lineLength}, {css: "background-color: yellow", clearOnEnter: true});
+					console.log(snippet);
+					var message = e.message;
+					document.getElementById("output").innerHTML = "<span style=\"color:white; background:red;\">" + message.substring(0, message.length -1) + " on line " + e.parsedLine + "." + "</span>";
+					return;
+				}
+			document.getElementById("output").innerHTML = "<span style=\"color:white; background:green;\">The yaml you have provided is valid!</span>";
+			}
+		</script>
+	</head>
+	
+	<body>
+		<h1>Yaml Checker</h1>
+		<textarea id="to-validate"></textarea>
+		</br>
+		<input type="submit" onclick="verifyYaml()" value="Verify"></input>
+		<script>
+			var textArea = document.getElementById("to-validate");
+			var editor = CodeMirror.fromTextArea(textArea, {
+				lineNumbers: true
+			});
+		</script>
+		</br>
+		</br>
+		<div id="output"></div>
+		</br>
+		</br>
+	</body>
+	<footer>
+		Copyright 2018 Club Obsidian and contributors, licensed under the Apache License Version 2.0.</br>
+		Made with <span style="color:red;"><i class="fas fa-heart"></i></span> using <a href="https://codemirror.net/">Code Mirror</a>, <a href="https://fontawesome.com">Font Awesome</a> and <a href="https://github.com/jeremyfa/yaml.js/">yaml.js</a>.
+	</footer>
+
+
+</html>
