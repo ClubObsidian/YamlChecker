@@ -1,3 +1,3 @@
 # YamlChecker
 
-A simple in-browser yaml checker or parser.
+A simple in-browser yaml parser.
