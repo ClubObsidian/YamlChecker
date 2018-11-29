@@ -18,8 +18,8 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/yamljs/0.3.0/yaml.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.40.0/codemirror.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/yamljs/0.3.0/yaml.js" integrity="sha256-76D1ilpKkZVQskungi+cvjCdZ4inb+bUt2Z5Bs4iaPg=" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.42.0/codemirror.js" integrity="sha256-CBDzVpaRz+F/gmVNVlIxnO9iFh3dL6WJ9LRbp/pJ2qc=" crossorigin="anonymous"></script>
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 		<link rel="stylesheet" href="css/codemirror.css">
 		<link rel="stylesheet" href="css/style.css">
@@ -53,7 +53,7 @@
 					editor.markText({line: lineNumber, ch: 0}, {line: lineNumber, ch: lineLength}, {css: "background-color: yellow", clearOnEnter: true});
 					console.log(snippet);
 					var message = e.message;
-					output.innerHTML = "<span style=\"color:white; background:red;\">" + message.substring(0, message.length -1) + " on line " + e.parsedLine + "." + "</span>";
+					output.innerHTML = "<span style=\"color:white; background:red;\">" + message.substring(0, message.length -1) + " line " + e.parsedLine + "." + "</span>";
 				}
 			}
 		</script>
