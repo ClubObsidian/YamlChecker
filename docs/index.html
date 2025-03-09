@@ -1,5 +1,5 @@
 <!--
-   Copyright 2019 Club Obsidian and contributors.
+   Copyright 2025 Club Obsidian and contributors.
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -14,62 +14,57 @@
    limitations under the License.
 -->
 
-
 <!DOCTYPE html>
 <html>
 	<head>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/yamljs/0.3.0/yaml.js" integrity="sha256-76D1ilpKkZVQskungi+cvjCdZ4inb+bUt2Z5Bs4iaPg=" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.42.0/codemirror.js" integrity="sha256-CBDzVpaRz+F/gmVNVlIxnO9iFh3dL6WJ9LRbp/pJ2qc=" crossorigin="anonymous"></script>
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 		<link rel="stylesheet" href="css/codemirror.css">
 		<link rel="stylesheet" href="css/style.css">
-		<script>
-			function verifyYaml()
-			{
-				var text = editor.getValue();
-				var output = document.getElementById("output");
-				try
-				{
-					if(text.trim() == "")
-					{
+	</head>
+	<body>
+		<script type="module">
+			import YAML from "https://cdn.jsdelivr.net/npm/yaml@2.7.0/browser/index.min.js";
+			
+			const textArea = document.getElementById("to-validate");
+			const editor = CodeMirror.fromTextArea(textArea, {
+				lineNumbers: true
+			});
+
+			const verifyYaml = () => {
+				const text = editor.getValue();
+				const output = document.getElementById("output");
+				try {
+					if (text.trim() == "") {
 						return;
 					}
-					var parsed = YAML.parse(text);
-					if(parsed instanceof Object)
-					{
+					const parsed = YAML.parse(text);
+					if (parsed instanceof Object) {
 						output.innerHTML = "<span style=\"color:white; background:green;\">Valid yaml</span>";
-					}
-					else
-					{
+					} else {
 						output.innerHTML = "<span style=\"color:white; background:red;\">No yaml has been provided to parse.</span>";
 					}
-				}
-				catch(e)
-				{
+				} catch(e) {
 					console.log(e);
-					var lineNumber = e.parsedLine - 1;
-					var snippet = e.snippet;
-					var lineLength = snippet.length;
-					editor.markText({line: lineNumber, ch: 0}, {line: lineNumber, ch: lineLength}, {css: "background-color: yellow", clearOnEnter: true});
-					console.log(snippet);
-					var message = e.message;
-					output.innerHTML = "<span style=\"color:white; background:red;\">" + message.substring(0, message.length -1) + " line " + e.parsedLine + "." + "</span>";
+					const pos = e.linePos;
+					const lineNumberStart = pos[0].line - 1;
+					const lineColStart = pos[0].col - 1;
+					const lineNumberEnd = pos[1].line - 1;
+					const lineColEnd = pos[1].col - 1;
+					editor.markText({line: lineNumberStart, ch: lineColStart}, {line: lineNumberEnd, ch: lineColEnd}, {css: "background-color: yellow", clearOnEnter: true});
+					const message = e.message;
+					output.innerHTML = "<span style=\"color:white; background:red;\">" + message + "</span>";
 				}
 			}
+			
+			document.getElementById("verify").addEventListener("click", (e) => {
+				verifyYaml();
+			});
 		</script>
-	</head>
-	
-	<body>
 		<h1>Yaml Checker</h1>
 		<textarea id="to-validate"></textarea>
 		</br>
-		<input type="submit" onclick="verifyYaml()" value="Verify"></input>
-		<script>
-			var textArea = document.getElementById("to-validate");
-			var editor = CodeMirror.fromTextArea(textArea, {
-				lineNumbers: true
-			});
-		</script>
+		<input type="submit" id="verify" value="Verify"></input>
 		</br>
 		</br>
 		<div id="output"></div>
@@ -77,9 +72,7 @@
 		</br>
 	</body>
 	<footer>
-		<a href="https://github.com/ClubObsidian/YamlChecker">Yaml Checker</a> copyright 2019 Club Obsidian and contributors, licensed under the <a href="https://github.com/ClubObsidian/YamlChecker/blob/master/LICENSE">Apache License Version 2.0.</a></br>
+		<a href="https://github.com/ClubObsidian/YamlChecker">Yaml Checker</a> copyright 2025 Club Obsidian and contributors, licensed under the <a href="https://github.com/ClubObsidian/YamlChecker/blob/master/LICENSE">Apache License Version 2.0.</a></br>
 		Made with <span style="color:red;"><i class="fas fa-heart"></i></span> using <a href="https://codemirror.net/">Code Mirror</a>, <a href="https://fontawesome.com">Font Awesome</a> and <a href="https://github.com/jeremyfa/yaml.js/">yaml.js</a>.
 	</footer>
-
-
 </html>
